@@ -1,0 +1,543 @@
+1. atm.bash
+#!/bin/bash
+
+savings=1000
+checking=1000
+pin=111
+user_input=0
+attempts=1
+
+clear
+
+while [[ $pin != $user_input && $attempts -le 3 ]]; do
+	echo
+	echo "***Welcome to CalPoly's ATM***"
+	echo
+	echo -n "Please enter your PIN:"
+	read user_input
+	if [[ $pin != $user_input ]]; then
+		echo "Invalid PIN."
+		attempts=$(( $attempts + 1 ))
+	elif [[ $attempts -eq 3 ]]; then
+		echo "Too many illegal PINs. Try later again."
+		exit 1
+	fi
+done
+
+menu()
+{
+	echo "***Welcome to CalPoly's ATM System***"
+	echo
+	echo
+	echo
+	echo "(1) Transfer from checking account to savings account"
+	echo
+	echo "(2) Transfer from savings account to checking account"
+	echo
+	echo "(3) Saving account balance"
+	echo
+	echo "(4) Checking account balance"
+	echo
+	echo "(5) Withdraw cash from either account"
+	echo
+	echo "(6) Exit"
+	echo
+	echo
+	echo
+	echo "-> Please select an option(1-6):"
+}
+
+transfer1()
+{
+	echo -n "How much would you like to transfer? "
+	read transfer_amount
+	if [[ $transfer_amount -le $checking ]]; then
+		checking=$(( $checking - $transfer_amount ))
+		savings=$(( $savings + $transfer_amount ))
+	else
+		echo "Transaction not completed - Not enough funds."
+		echo "Current Checking account balance: " $checking
+		sleep 5
+	fi
+}
+
+transfer2()
+{
+	echo -n "How much would you like to transfer? "
+	read transfer_amount
+	if [[ $transfer_amount -le $savings ]]; then
+		savings=$(( $savings - $transfer_amount ))
+		checking=$(( $checking + $transfer_amount ))
+	else
+		echo "Transaction not completed - Not enough funds."
+		echo "Current Savings account balance: " $savings
+		sleep 5
+	fi
+}
+
+withdraw()
+{
+	until [[ $input -eq 1 || $input -eq 2 ]]; do
+		echo -n "Withdraw from (1) Savings or (2) Checking? "
+		read input
+	done
+	echo -n "Withdraw amount: "
+	read amount
+	if [[ $input -eq 1 ]]; then
+		if [[ $amount -le $savings ]]; then
+			savings=$(( $savings - $amount ))
+		else
+			echo "Transaction not completed - Not enough funds."
+			echo "Current Savings account balance: " $savings
+			sleep 5
+		fi
+	elif [[ $user -eq 2 ]]; then
+		if [[ $amount -le $checking ]]; then
+			checking=$(( $checking - $amount ))
+		else
+			echo "Transaction not completed - Not enough funds."
+			echo "Current Checking account balance: " $checking
+			sleep 5
+		fi
+	fi
+}
+
+until [[ $user_input -eq 6 ]]; do
+	menu
+	read user_input
+	if [[ $user_input -le 6 || $user_input -ge 1 ]]; then
+		case $user_input in
+			1)
+				transfer1
+				clear
+				;;
+			2)
+				transfer2
+				clear
+				;;
+			3)
+				echo "Current Savings account balance: " $savings
+				sleep 5
+				clear
+				;;
+			4)
+				echo "Current Checking account balance: " $checking
+				sleep 5
+				clear
+				;;
+			5)
+				withdraw
+				clear
+				;;
+			6)
+				exit 1
+				;;
+		esac
+	else
+		echo "Invalid menu choice"
+		sleep 3
+		clear
+	fi
+done
+
+2. atm.ksh
+#!/bin/ksh
+
+savings=1000
+checking=1000
+pin=111
+user_input=0
+attempts=1
+
+clear
+
+while [[ $pin != $user_input ]] && [[ $attempts -le 3 ]]; do
+	print
+	print "***Welcome to CalPoly's ATM***"
+	print
+	print -n "Please enter your PIN:"
+	read user_input
+	if [ $pin != $user_input ]; then
+		print "Invalid PIN."
+		(( attempts = $attempts + 1 ))
+	elif [ $attempts -eq 3 ]; then
+		print "Too many illegal PINs. Try later again."
+		exit 1
+	fi
+done
+
+menu()
+{
+	print "***Welcome to CalPoly's ATM System***"
+	print
+	print
+	print
+	print "(1) Transfer from checking account to savings account"
+	print
+	print "(2) Transfer from savings account to checking account"
+	print
+	print "(3) Saving account balance"
+	print
+	print "(4) Checking account balance"
+	print
+	print "(5) Withdraw cash from either account"
+	print
+	print "(6) Exit"
+	print
+	print
+	print
+	print "-> Please select an option(1-6):"
+}
+
+transfer1()
+{
+	print -n "How much would you like to transfer? "
+	read transfer_amount
+	if [ $transfer_amount -le $checking ]; then
+		(( checking = $checking - $transfer_amount ))
+		(( savings = $savings + $transfer_amount ))
+	else
+		print "Transaction not completed - Not enough funds."
+		print "Current Checking account balance: " $checking
+		sleep 5
+	fi
+}
+
+transfer2()
+{
+	print -n "How much would you like to transfer? "
+	read transfer_amount
+	if [ $transfer_amount -le $savings ]; then
+		(( savings = $savings - $transfer_amount ))
+		(( checking = $checking + $transfer_amount ))
+	else
+		print "Transaction not completed - Not enough funds."
+		print "Current Savings account balance: " $savings
+		sleep 5
+	fi
+}
+
+withdraw()
+{
+	until [[ $input -eq 1 || $input -eq 2 ]]; do
+		echo -n "Withdraw from (1) Savings or (2) Checking? "
+		read input
+	done
+	print -n "Withdraw amount: "
+	read amount
+	if [ $input -eq 1 ]; then
+		if [ $amount -le $savings ]; then
+			(( savings = $savings - $amount ))
+		else
+			print "Transaction not completed - Not enough funds."
+			print "Current Savings account balance: " $savings
+			sleep 5
+		fi
+	elif [ $user -eq 2 ]; then
+		if [ $amount -le $checking ]; then
+			(( checking = $checking - $amount ))
+		else
+			print "Transaction not completed - Not enough funds."
+			print "Current Checking account balance: " $checking
+			sleep 5
+		fi
+	fi
+}
+
+until [[ $user_input -eq 6 ]]; do
+	menu
+	read user_input
+	if [[ $user_input -le 6 || $user_input -ge 1 ]]; then
+		case $user_input in
+			1)
+				transfer1
+				clear
+				;;
+			2)
+				transfer2
+				clear
+				;;
+			3)
+				print "Current Savings account balance: " $savings
+				sleep 5
+				clear
+				;;
+			4)
+				print "Current Checking account balance: " $checking
+				sleep 5
+				clear
+				;;
+			5)
+				withdraw
+				clear
+				;;
+			6)
+				exit 1
+				;;
+		esac
+	else
+		print "Invalid menu choice"
+		sleep 3
+		clear
+	fi
+done
+
+3. atm.csh
+#!/bin/csh
+
+set savings = 1000
+set checking = 1000
+set pin = 111
+set user_input = 0
+set attempts = 1
+
+while ( $pin != $user_input && $attempts <= 3 )
+	echo
+	echo "***Welcome to CalPoly's ATM***"
+	echo
+	echo -n "Please enter your PIN:"
+	read user_input
+	if ( $pin != $user_input ) then
+		echo "Invalid PIN."
+		@ attempts = $attempts + 1
+	else if ( $attempts == 3 ) then
+		echo "Too many illegal PINs. Try later again."
+		exit 1
+	endif
+end
+
+while ( $user_input > 6 || $user_input < 1 )
+	echo "***Welcome to CalPoly's ATM System***"
+	echo
+	echo
+	echo
+	echo "(1) Transfer from checking account to savings account"
+	echo
+	echo "(2) Transfer from savings account to checking account"
+	echo
+	echo "(3) Saving account balance"
+	echo
+	echo "(4) Checking account balance"
+	echo
+	echo "(5) Withdraw cash from either account"
+	echo
+	echo "(6) Exit"
+	echo
+	echo
+	echo
+	echo "-> Please select an option(1-6):"
+	read user_input
+	if ( $user_input <= 6 || $user_input >= 1 )
+		switch ( $user_input )
+			case 1:
+				echo -n "How much would you like to transfer? "
+				read transfer_amount
+				if ( $transfer_amount -le $checking ) then
+					@ checking = $checking - $transfer_amount
+					@ savings = $savings + $transfer_amount
+				else
+					echo "Transaction not completed - Not enough funds."
+					echo "Current Checking account balance: " $checking
+					sleep 5
+				endif
+				clear
+				breaksw
+			case 2:
+				echo -n "How much would you like to transfer? "
+				read transfer_amount
+				if ( $transfer_amount -le $savings ) then
+					@ savings = $savings - $transfer_amount
+					@ checking = $checking + $transfer_amount
+				else
+					echo "Transaction not completed - Not enough funds."
+					echo "Current Savings account balance: " $savings
+					sleep 5
+				endif
+				clear
+				breaksw
+			case 3:
+				echo "Current Savings account balance: " $savings
+				sleep 5
+				clear
+				breaksw
+			case 4:
+				echo "Current Checking account balance: " $checking
+				sleep 5
+				clear
+				breaksw
+			case 5:
+				while ( $input < 1 || $input > 2 )
+					echo -n "Withdraw from (1) Savings or (2) Checking? "
+					read input
+				end
+				echo -n "Withdraw amount: "
+				read amount
+				if ( $input == 1 ) then
+					if ( $amount <= $savings ) then
+						@ savings = $savings - $amount
+					else
+						echo "Transaction not completed - Not enough funds."
+						echo "Current Savings account balance: " $savings
+						sleep 5
+					endif
+				else if ( $input == 2 ) then
+					if ( $amount -le $checking ) then
+						@ checking = $checking - $amount
+					else
+					echo "Transaction not completed - Not enough funds."
+					echo "Current Checking account balance: " $checking
+					sleep 5
+					endif
+				endif
+				clear
+				breaksw
+			case 6:
+				exit 1
+				breaksw
+		endsw
+	else
+		echo "Invalid menu choice"
+		sleep 3
+		clear
+	endif
+end
+
+4. atm zsh
+#!/bin/zsh
+
+savings=1000
+checking=1000
+pin=111
+user_input=0
+attempts=1
+
+while [[ $pin != $user_input ]] && [[ $attempts -le 3 ]]; do
+	echo
+	echo "***Welcome to CalPoly's ATM***"
+	echo
+	echo -n "Please enter your PIN:"
+	read user_input
+	if [[ $pin != $user_input ]]; then
+		echo "Invalid PIN."
+		(( attempts = $attempts + 1 ))
+	elif [[ $attempts -eq 3 ]]; then
+		echo "Too many illegal PINs. Try later again."
+		exit 1
+	fi
+done
+
+menu()
+{
+	echo "***Welcome to CalPoly's ATM System***"
+	echo
+	echo
+	echo
+	echo "(1) Transfer from checking account to savings account"
+	echo
+	echo "(2) Transfer from savings account to checking account"
+	echo
+	echo "(3) Saving account balance"
+	echo
+	echo "(4) Checking account balance"
+	echo
+	echo "(5) Withdraw cash from either account"
+	echo
+	echo "(6) Exit"
+	echo
+	echo
+	echo
+	echo "-> Please select an option(1-6):"
+}
+
+transfer1()
+{
+	echo -n "How much would you like to transfer? "
+	read transfer_amount
+	if [[ $transfer_amount -le $checking ]]; then
+		(( checking = $checking - $transfer_amount ))
+		(( savings = $savings + $transfer_amount ))
+	else
+		echo "Transaction not completed - Not enough funds."
+		echo "Current Checking account balance: " $checking
+		sleep 5
+	fi
+}
+
+transfer2()
+{
+	echo -n "How much would you like to transfer? "
+	read transfer_amount
+	if [[ $transfer_amount -le $savings ]]; then
+		(( savings = $savings - $transfer_amount ))
+		(( checking = $checking + $transfer_amount ))
+	else
+		echo "Transaction not completed - Not enough funds."
+		echo "Current Savings account balance: " $savings
+		sleep 5
+	fi
+}
+
+withdraw()
+{
+	while [[ $input -lt 1 ]] || [[ $input -gt 2 ]]; do
+		echo -n "Withdraw from (1) Savings or (2) Checking? "
+		read input
+	done
+	echo -n "Withdraw amount: "
+	read amount
+	if [[ $input -eq 1 ]]; then
+		if [[ $amount -le $savings ]]; then
+			(( savings = $savings - $amount ))
+		else
+			echo "Transaction not completed - Not enough funds."
+			echo "Current Savings account balance: " $savings
+			sleep 5
+		fi
+	elif [[ $user_input -eq 2 ]]; then
+		if [[ $amount -le $checking ]]; then
+			(( checking = $checking - $amount ))
+		else
+			echo "Transaction not completed - Not enough funds."
+			echo "Current Checking account balance: " $checking
+			sleep 5
+		fi
+	fi
+}
+
+until [[ $user_input -eq 6 ]]; do
+	menu
+	read user_input
+	if [[ $user_input -le 6 || $user_input -ge 1 ]]; then
+		case $user_input in
+			1)
+				transfer1
+				clear
+				;;
+			2)
+				transfer2
+				clear
+				;;
+			3)
+				echo "Current Savings account balance: " $savings
+				sleep 5
+				clear
+				;;
+			4)
+				echo "Current Checking account balance: " $checking
+				sleep 5
+				clear
+				;;
+			5)
+				withdraw
+				clear
+				;;
+			6)
+				exit 1
+				;;
+		esac
+	else
+		echo "Invalid menu choice"
+		sleep 3
+		clear
+	fi
+done
