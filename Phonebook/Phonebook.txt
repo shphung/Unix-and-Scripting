@@ -1,0 +1,251 @@
+1. phonebook.bash
+#!/bin/bash
+file()
+{
+	echo "Please enter the name of the file (including the extension)"
+	echo "i.e. if the file is sample.txt"
+	echo "Enter: sample.txt"
+	read file
+	filename=$file
+}
+
+menu()
+{
+	echo "Menu"
+	echo
+	echo "(1) List records in alphabetical order by first name"
+	echo
+	echo "(2) List records in alphabetical order by last name"
+	echo
+	echo "(3) List records in reverse alphabetical order by first name"
+	echo
+	echo "(4) List records in reverse alphabetical order by last name"
+	echo
+	echo "(5) Search for a record by last name and print the result"
+	echo
+	echo "(6) Search for a record by birthday by a given month or year"
+	echo
+	echo "(7) Exit
+	echo
+	echo -n "-> Please select an option(1-7): "
+}
+
+listfirst()
+{
+	sort $filename
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+listlast()
+{
+	sort -k2 $filename
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+listreversefirst()
+{
+	sort -r $filename
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+listreverselast()
+{
+	sort -k2 -r $filename
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+searchlast()
+{
+
+	echo -n "Please enter the last name: "
+	read lastname
+	echo
+	grep $lastname $filename
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+searchbirthday()
+{
+	echo -n "Do you want to search by (1)Month or (2)Year? "
+	read option
+	echo
+	if [[ $option == 1 ]]; then
+		echo -n "Please enter the month: "
+		read month
+		echo
+		grep [:]$month[/] $filename
+	elif [[ $option == 2 ]]; then
+		echo -n "Please enter the last two digits of the year: "
+		read year
+		echo
+		grep [/]$year[:] $filename
+	fi
+	echo
+	read -p "Press enter to continue"
+	clear
+}
+
+file
+until [[ $user_input == 7 ]]; do
+	menu
+	read user_input
+	echo
+	case $user_input in
+		1)
+			listfirst
+			;;
+		2)
+			listlast
+			;;
+		3)
+			listreversefirst
+			;;
+		4)
+			listreverselast
+			;;
+		5)
+			searchlast
+			;;
+		6)
+			searchbirthday
+			;;
+		7)
+			exit 1
+			;;
+		*)
+			menu
+			echo -n "Please enter a correct choice: "
+			read user_input
+			;;
+	esac
+done
+
+2. phonebook.pl
+#!/usr/bin/perl -w
+sub file()
+{
+	print "Please enter the name of the file (including the extension)\n";
+	print "i.e. if the file is named sample.txt\n";
+	print "Enter: sample.txt\n";
+	$filename = <STDIN>;
+	chomp $filename;
+}
+
+sub menu()
+{
+	print "Menu\n\n";
+	print "(1) List records in alphabetical order by first name\n\n";
+	print "(2) List records in alphabetical order by last name\n\n";
+	print "(3) List records in reverse alphabetical order by first name\n\n";
+	print "(4) List records in reverse alphabetical order by last name\n\n";
+	print "(5) Search for a record by last name and print the results\n\n";
+	print "(6) Search for a record by birthday by a given month or year\n\n";
+	print "(7) Exit\n\n";
+	print "-> Please select an option(1-7): ";
+}
+
+sub listfirst()
+{
+	system("sort $filename");
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+sub listlast()
+{
+	system("sort -k2 $filename");
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+sub listreversefirst()
+{
+	system("sort -r $filename");
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+sub listreverselast()
+{
+	system("sort -k2 -r $filename");
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+sub searchlast()
+{
+	print "\nPlease enter the last name: ";
+	$lastname = <STDIN>;
+	chomp $lastname;
+	print "\n";
+	system("grep $lastname $filename");
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+sub searchbirthday()
+{
+	print "Do you want to search by (1) Month or (2) Year? "
+	$option = <STDIN>;
+	chomp $option;
+	print "\n";
+	if( $option == 1 ) {
+		print "Please enter the month: ";
+		$month = <STDIN>;
+		chomp $month;
+		print "\n";
+		system("grep :$month/ $filename");
+	} elsif( $option == 2 ) {
+		print "Please enter the last two digits of the year: ";
+		$year = <STDIN>;
+		chomp $year;
+		print "\n";
+		system("grep /$year: $filename");
+	}
+	print "\nPress enter to continue";
+	<STDIN>;
+	system("clear");
+}
+
+file();
+until( $user_input == 7 ) {
+	menu();
+	$user_input = <STDIN>;
+	chomp $user_input;
+	print "\n";
+	if( $user_input == 1 ) {
+		listfirst();
+	} elsif( $user_input == 2 ) {
+		listlast();
+	} elsif( $user_input == 3 ) {
+		listreversefirst();
+	} elsif( $user_input == 4 ) {
+		listreverselast();
+	} elsif( $user_input == 5 ) {
+		searchlast();
+	} elsif( $user_input == 6 ) {
+		searchbirthday();
+	} elsif( $user_input == 7 ) {
+		exit 1;
+	} else {
+		menu();
+		print "Please enter a correct choice: ";
+		$user_input = <STDIN>;
+		chomp $user_input;
+	}
+}
