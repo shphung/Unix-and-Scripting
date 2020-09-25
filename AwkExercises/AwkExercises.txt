@@ -1,0 +1,73 @@
+1. awk -F'[: ]' '{print $3, $4}' datafile
+(510) 548-1278
+(408) 538-2358
+(206) 654-6279
+(206) 548-1348
+(206) 548-1278
+(916) 343-6410
+(406) 298-7744
+(206) 548-1278
+(916) 348-4278
+(510) 548-5258
+(408) 926-3456
+(916) 440-1763
+
+2. awk -F'[: ]' '/Dan/{print $3, $4}' datafile
+(406) 298-7744
+
+3. awk -F'[: ]' '/Susan/{print $1, $2, ": " $3, $4}' datafile
+Susan Dalsass : (206) 654-6279
+
+4. awk -F'[: ]' '/ [D]/{print $2}' datafile
+Dobbins
+Dalsass
+
+5. awk -F'[: ]' '/^[CE]/{print $1}' datafile
+Christian
+Chet
+Elizabeth
+
+6. awk -F'[: ]' '/^[A-Za-z][a-z][a-z][a-z] /{print $1}' datafile
+Mike
+Jody
+John
+Chet
+
+7. awk -F'[: ]' '/(916)/{print $1}' datafile
+Guy
+John
+Elizabeth
+
+8. awk -F'[: ]' '/Mike/{print "$" $5, "$" $6, "$" $7}' datafile
+$250 $100 $175
+
+9. awk -F'[: ]' '{print $2 ", " $1}' datafile
+Harrington, Mike
+Dobbins, Christian
+Dalsass, Susan
+McNichol, Archie
+Savage, Jody
+Quigley, Guy
+Savage, Dan
+McNeil, Nancy
+Goldenrod, John
+Main, Chet
+Savage, Tom
+Stachelin, Elizabeth
+
+10. awk -F'[: ]' -f awkscript datafile
+/Savage/{print $1, $2, $3, $4}
+/Chet/{print "$" $5, "$" $6 "$" $7}
+$5 == 250 {print $1, $2, "contributed $250 the first month"}
+
+Mike Harrington contributed $250 the first month
+Susan Dalsass contributed $250 the first month
+Archie McNichol contributed $250 the first month
+Jody Savage (206) 548-1278
+Guy Quigley contributed $250 the first month
+Dan Savage (406) 298-7744
+Nancy McNeil contributed $250 the first month
+John Goldenrod contributed $250 the first month
+$50 $95 $135
+Tom Savage (408) 926-3456
+Tom Savage contributed $250 the first month
