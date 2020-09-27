@@ -1,0 +1,367 @@
+1.
+#!/bin/sh
+echo -n "Please enter a number: "
+read user_input
+x=`expr $user_input % 2`
+if [ $x = 0 ]
+then
+	echo $x "is even"
+elif [ $x = 1 ]
+	then
+		echo $x "is odd"
+fi
+
+2.
+#!/bin/sh
+echo "Are you OK?"
+read user_input
+while [ "$user_input" != "y" ] || [ "$user_input" != "Y" ] || [ "$user_input" != "n" ] || [ "$user_input" != "N" ]
+do
+	if [ "$user_input" = "y" ] || [ "$user_input" = "Y" ]
+	then
+		echo "Glad to hear it"
+		break
+	elif [ "$user_input" = "n"] || [ "$user_input" = "N" ]
+	then
+		echo "Sorry that you are not feeling good"
+		break
+	else
+		echo "Please enter a valid choice"
+		read user_input
+	fi
+done
+
+3.1
+#!/bin/sh
+echo -n "Please enter a score: "
+read user_input
+while [ $user_input -ge 0 ] || [ $user_input -le 0 ]
+do
+	if [ $user_input -ge 91 ] && [ $user_input -le 100 ]
+	then
+		echo "You got an A"
+	elif [ $user_input -ge 81 ] && [ $user_input -le 90 ]
+	then
+		echo "You got a B"
+	elif [ $user_input -ge 71 ] && [ $user_input -le 80 ]
+	then
+		echo "You got a C"
+	elif [ $user_input -ge 61 ] && [ $user_input -le 70 ]
+	then
+		echo "You got a D"
+	elif [ $user_input -ge 0 ] && [ $user_input -le 60 ]
+	then
+		echo "You failed"
+	else
+		echo -n "Please enter a valid number "
+		read user_input
+	fi
+done
+
+3.2
+#!/bin/sh
+if [ $1 -ge 91 && [ $1 -le 100 ]
+then
+	echo "You got an A"
+elif [ $1 -ge 81 && [ $1 -le 90 ]
+then
+	echo "You got a B"
+elif [ $1 -ge 71 && [ $1 -le 80 ]
+then
+	echo "You got a C"
+elif [ $1 -ge 61 && [ $1 -le 70 ]
+then
+	echo "You got a D"
+elif [ $1 -ge 0 && [ $1 -le 60 ]
+then
+	echo "You failed"
+else
+	echo "You entered an invalid number"
+fi
+
+4.
+#!/bin/sh
+now=`date`
+element=1
+while [ $element -le 6 ]
+do
+	if [ $element -eq 1 ]
+	then
+		var1=`echo $now | cut -d " " -f1`
+		echo $var1
+	elif [ $element -eq 2 ]
+	then
+		var2=`echo $now | cut -d " " -f2`
+		echo $var2
+	elif [ $element -eq 3 ]
+	then
+		var3=`echo $now | cut -d " " -f3`
+		echo $var3
+	elif [ $element -eq 4 ]
+	then
+		var4=`echo $now | cut -d " " -f4`
+		echo $var4
+	elif [ $element -eq 5 ]
+	then
+		var5=`echo $now | cut -d " " -f5`
+		echo $var5
+	elif [ $element -eq 6 ]
+	then
+		var6=`echo $now | cut -d " " -f6`
+		echo $var6
+	fi
+	element=`expr $element + 1`
+done
+
+5.
+#!/bin/sh
+echo -n "Please enter a color: "
+read user_input
+case "$user_input" in
+	[Bb]l*)
+		echo "The sky is" $user_input
+		;;
+	red)
+		echo "The sun is sometimes this color"
+		;;
+	yellow)
+		echo "The sun is sometimes this color"
+		;;
+	*)
+		echo $user_input "is not in any of the defined categories"
+		;;
+esac
+
+
+6.
+#!/bin/sh
+num=0
+while [ $num -le 9 ]
+do
+	echo $num ""
+	num=`expr $num + 1`
+done
+
+
+7.
+#!/bin/sh
+element=1
+while [ $element -le 7 ]
+do
+	if [ $element -eq 1 ]
+	then
+		echo $1 $2 $3 $4 $5 $6 $7
+	elif [ $element -eq 2 ]
+	then
+		echo $2 $3 $4 $5 $6 $7
+	elif [ $element -eq 3 ]
+	then
+		echo $3 $4 $5 $6 $7
+	elif [ $element -eq 4 ]
+	then
+		echo $4 $5 $6 $7
+	elif [ $element -eq 5 ]
+	then
+		echo $5 $6 $7
+	elif [ $element -eq 6 ]
+	then
+		echo $6 $7
+	elif [ $element -eq 7 ]
+	then
+		echo $7
+	fi
+	element=`expr $element + 1`
+done
+
+8.
+#!/bin/sh
+echo -n "Please enter a positive integer: "
+read int1
+echo -n "Please enter another positive integer: "
+read int2
+
+#Smaller number logic
+if [ $int1 -eq $int2 ]
+then
+	echo "These numbers are equal"
+elif [ $int1 -lt $int2 ]
+then
+	echo $int1 "is less than" $int2
+else
+	echo $int2 "is less than" $int1
+fi
+
+#GCD Logic
+temp=0
+temp1=$int1
+temp2=$int2
+
+while [ $temp2 != 0 ]
+do
+	temp=$temp2
+	temp2=`expr $temp1 % $temp2`
+	temp1=$temp
+done
+
+echo "GCD of" $int1 "and" $int2 "is" $temp1
+
+#LCM Logic
+var1=`expr $int1 \* $int2`
+LCM=`expr var1 \/ $temp1`
+echo "LCM of" $int1 "and" $int2 "is" $LCM
+
+9.
+#!/bin/sh
+do_square()
+{
+	var1=`expr $1 \* $1`
+	echo $var1
+}
+do_square $1
+
+10.
+#!/bin/sh
+num1=$1
+num2=$2
+menu()
+{
+	echo "\nMENU\n"
+	echo "a. Add the numbers"
+	echo "s. Subtract the numbers"
+	echo "m. Multiply the numbers"
+	echo "d. Divide the numbers"
+	echo "e. Exit"
+	echo -n "Enter a, s, m, d, or e: "
+}
+
+add()
+{
+	var1=`expr $num1 + $num2`
+	echo $var1
+}
+
+subtract()
+{
+	var1=`expr $num1 - $num2`
+	echo $var1
+}
+
+multiply()
+{
+	var1=`expr $num1 \* $num2`
+	echo $var1
+}
+
+divide()
+{
+	var1=`expr $num1 \/ $num2`
+	echo $var1
+}
+
+numberSwitch()
+{
+	echo "Would you like to do another operation using the same two integers, another operation using two different integers, or exit?"
+	echo "1. Continue with old integers"
+	echo "2. Continue with new integers"
+	echo "3. Exit"
+	read input
+	case "$input" in
+		1)
+			menu
+			read user_input
+			;;
+		2)
+			echo -n "Please enter first new integer: "
+			read new1
+			echo -n "Please enter second new integer: "
+			read new2
+			num1=$new1
+			num2=$new2
+			menu
+			read user_input
+			;;
+		3)
+			user_input="e"
+			;;
+	esac
+}
+
+if [ $# -eq 2 ]
+then
+	menu
+	read user_input
+	until [ "$user_input" = "e" ] || [ "$user_input" = "E" ]
+	do
+		case "$user_input" in
+			a)	
+				add
+				numberSwitch
+				;;
+			A)
+				add
+				numberSwitch
+				;;
+			s)
+				subtract
+				numberSwitch
+				;;-
+			S)
+				subtract
+				numberSwitch
+				;;
+			m)
+				multiply
+				numberSwitch
+				;;
+			M)
+				multiply
+				numberSwitch
+				;;
+			d)
+				divide
+				numberSwitch
+				;;
+			D)
+				divide
+				numberSwitch
+				;;
+			e)
+				break
+				;;
+			E)
+				break
+				;;
+			*)
+				menu
+				echo -n "Please enter a correct choice: "
+				read user_input
+		esac
+	done
+else
+	echo "This script requires two incoming arguments from the command line."
+	echo "For example if this script is named hello.sh"
+	echo "I will pass the two arguments by using either options:"
+	echo "Option 1: sh hello.sh 1 2"
+	echo "Option 2: ./hello.sh 1 2"
+fi
+
+11.
+#!/bin/sh
+echo "Please enter a number between 1 and 10: "
+read user_input
+counter=1
+summation=0
+factorial=1
+while [ $counter -le $user_input ]
+do
+	summation=`expr $counter + $summation`
+	counter=`$counter + 1`
+done
+echo "Sum:" $summation
+counter=1
+while [ $counter -le $user_input ]
+do
+	factorial=`expr $factorial \* $counter`
+	counter=`$counter + 1`
+done
+echo "Factorial:" $factorial
