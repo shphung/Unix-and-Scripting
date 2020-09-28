@@ -1,0 +1,341 @@
+1.
+#!/bin/csh
+echo -n "Please enter a number: "
+set user_input = $<
+@ x = $user_input % 2
+if ( $x == 0 ) then
+	echo $user_input "is even"
+else
+	echo $user_input "is odd"
+endif
+
+2.
+#!/bin/csh
+echo "Are you OK?"
+set user_input = $<
+while ( $user_input != "y" || $user_input != "Y" || $user_input != "n" || $user_input != "N" )
+	if ( $user_input == "y" || $user_input == "Y" ) then
+		echo "Glad to hear it"
+		break
+	else if ( $user_input == "n" || $user_input == "N" ) then
+		echo "Sorry that you are not feeling good"
+		break
+	else
+		echo "Please enter a valid choice: "
+		set user_input = $<
+	endif
+end
+
+3.1
+#!/bin/csh
+echo -n "Please enter a score: "
+set user_input = $<
+while ( $user_input >= 0 || $user_input <= 0 )
+	if ( $user_input >= 91 && $user_input <= 100 ) then
+		echo "You got an A"
+		break
+	else if ( $user_input >= 81 && $user_input <= 90 ) then
+		echo "You got a B"
+		break
+	else if ( $user_input >= 71 && $user_input <= 80 ) then
+		echo "You got a C"
+		break
+	else if ( $user_input >= 61 && $user_input <= 70 ) then
+		echo "You got a D"
+		break
+	else if ( $user_input >= 0 && $user_input <= 60 ) then
+		echo "You failed"
+		break
+	else
+		echo -n "Please enter a valid number "
+		set user_input = $<
+	endif
+end
+
+3.2
+#!/bin/csh
+if ( $1 >= 91 && $1 <= 100 ) then
+	echo "You got an A"
+else if ( $1 >= 81 && $1 <= 90 ) then
+	echo "You got a B"
+else if ( $1 >= 71 && $1 <= 80 ) then
+	echo "You got a C"
+else if ( $1 >= 61 && $1 <= 70 ) then
+	echo "You got a D"
+else if ( $1 >= 0 && $1 <= 60 ) then
+	echo "You failed"
+else
+	echo "You entered an invalid number"
+endif
+
+4.
+#!/bin/csh
+set now = `date`
+set element = 1
+while ( $element <= 6 )
+	if ( $element == 1 ) then
+		set var1 = `echo $now | cut -d " " -f1`
+		echo $var1
+	else if ( $element == 2 ) then
+		set var2 = `echo $now | cut -d " " -f2`
+		echo $var2
+	else if ( $element == 3 ) then
+		set var3 = `echo $now | cut -d " " -f3`
+		echo $var3
+	else if ( $element == 4 ) then
+		set var4 = `echo $now | cut -d " " -f4`
+		echo $var4
+	else if ( $element == 5 ) then
+		set var5 = `echo $now | cut -d " " -f5`
+		echo $var5
+	else if ( $element == 6 ) then	
+		set var6 = `echo $now | cut -d " " -f6`
+		echo $var6
+	endif
+	@ element = $element + 1
+end
+
+5.
+#!/bin/csh
+echo -n "Please enter a color: "
+set user_input = $<
+switch ( $user_input )
+	case [Bb]l*:
+		echo "The sky is" $user_input
+		breaksw
+	case red:
+	case yellow:
+		echo "The sun is sometimes this color"
+		breaksw
+	default:
+		echo $user_input "is not any of the defined categories"
+		breaksw
+endsw
+
+6.
+#!/bin/csh
+set num = 0
+while ( $num <= 9 )
+	echo -n $num ""
+	@ num = $num + 1
+end
+echo
+
+7.
+#!/bin/csh
+set element = 1
+while ( $element <= 7 )
+	if ( $element == 1 ) then
+		echo $1 $2 $3 $4 $5 $6 $7
+	else if ( $element == 2 ) then
+		echo $2 $3 $4 $5 $6 $7
+	else if ( $element == 3 ) then
+		echo $3 #4 #5 #6 $7
+	else if ( $element == 4 ) then
+		echo $4 $5 $6 $7
+	else if ( $element == 5 ) then
+		echo $5 $6 $7
+	else if ( $element == 6 ) then
+		echo $6 $7
+	else if ( $element == 7 ) then
+		echo $7
+	endif
+	@ element = $element + 1
+end
+
+8.
+#!/bin/csh
+echo -n "Please enter a positive integer: "
+set int1 = $<
+echo -n "Please enter another positive integer: "
+set int2 = $<
+
+#Smaller number logic
+if ( $int1 == $int2 ) then
+	echo "These numbers are equal"
+else if ( $int1 < $int2 ) then
+	echo $int1 "is less than" $int2
+else
+	echo $int2 "is less than" $int1
+endif
+
+#GCD Logic
+set temp = 0
+set temp1 = $int1
+set temp2 = $int2
+
+while ( $temp2 != 0 )
+	@ temp = $temp2
+	@ temp2 = $temp1 % $temp2
+	@ temp1 = $temp
+end
+
+echo "GCD of" $int1 "and" $int2 "is" $temp1
+
+#LCM Logic
+@ var1 = $int1 * $int2
+@ LCM = $var1 / $temp1
+echo "LCM of" $int1 "and" $int2 "is" $LCM
+
+9.
+#!/bin/csh
+alias do_square "@ var1 = $1 * $1; echo $var1"
+do_square
+
+
+10.
+#!/bin/csh
+set num1 = $1
+set num2 = $2
+
+alias menu 'echo MENU; echo a. Add; echo s. Subtract; echo m. Multiply; echo d. Divide; echo e. Exit; echo Enter a, s, m, d, or e:'
+alias add '@ var1 = $num1 + $num2; echo $var1'
+alias subtract '@ var1 = $num1 - $num2; echo $var1'
+alias multiply '@ var1 = $num1 * $num2; echo $var1'
+alias divide '@ var1 = $num1 / $num2; echo $var1'
+alias numberSwitch 'echo 1. Continue with old integers; echo 2. Continue with new integers; echo 3. Exit'
+
+if ( $#argv == 2 ) then
+	menu
+	set user_input = $<
+	while ( $user_input != "e" || $user_input != "E" )
+		switch ( $user_input )
+			case a:
+			case A:
+				add
+				numberSwitch
+				set input = $<
+				switch ( $input )
+					case 1:
+						menu
+						set user_input = $<
+						breaksw
+					case 2:
+						echo -n "Please enter first new integer: "
+						set new1 = $<
+						echo -n "Please enter second new integer: "
+						set new2 = $<
+						set num1 = $new1
+						set num2 = $new2
+						menu
+						set user_input = $<
+						breaksw
+					case 3:
+						user_input = "e"
+						breaksw
+				endsw
+				breaksw
+			case s:
+			case S:
+				subtract
+				numberSwitch
+				set input = $<
+				switch ( $input )
+					case 1:
+						menu
+						set user_input = $<
+						breaksw
+					case 2:
+						echo -n "Please enter first new integer: "
+						set new1 = $<
+						echo -n "Please enter second new integer: "
+						set new2 = $<
+						set num1 = $new1
+						set num2 = $new2
+						menu
+						set user_input = $<
+						breaksw
+					case 3:
+						user_input = "e"
+						breaksw
+				endsw
+				breaksw
+			case m:
+			case M:
+				multiply
+				numberSwitch
+				set input = $<
+				switch ( $input )
+					case 1:
+						menu
+						set user_input = $<
+						breaksw
+					case 2:
+						echo -n "Please enter first new integer: "
+						set new1 = $<
+						echo -n "Please enter second new integer: "
+						set new2 = $<
+						set num1 = $new1
+						set num2 = $new2
+						menu
+						set user_input = $<
+						breaksw
+					case 3:
+						user_input = "e"
+						breaksw
+				endsw
+				breaksw
+			case d:
+			case D:
+				divide
+				numberSwitch
+				set input = $<
+				switch ( $input )
+					case 1:
+						menu
+						set user_input = $<
+						breaksw
+					case 2:
+						echo -n "Please enter first new integer: "
+						set new1 = $<
+						echo -n "Please enter second new integer: "
+						set new2 = $<
+						set num1 = $new1
+						set num2 = $new2
+						menu
+						set user_input = $<
+						breaksw
+					case 3:
+						user_input = "e"
+						breaksw
+				endsw
+				breaksw
+			case e:
+			case E:
+				breaksw
+			default:
+				menu
+				echo -n "Please enter a correct choice: "
+				set user_input = $<
+		endsw
+	end
+else
+	echo "This script requires two incoming arguments from the command line."
+	echo "For example if this script is named hello.csh"
+	echo "I will pass the two arguments by using either options:"
+	echo "Option 1: csh hello.csh 1 2"
+	echo "Option 2: ./hello.csh 1 2"
+endif
+
+11.
+#!/bin/csh
+echo -n "Please enter a number between 1 and 10: "
+set user_input = $<
+set counter = 1
+set summation = 0
+set factorial = 1
+
+while ( $counter <= $user_input )
+	@ summation = $counter + $summation
+	@ counter = $counter + 1
+end
+
+echo "Sum:" $summation
+
+set counter = 1
+
+while ( $counter <= $user_input )
+	@ factorial = $factorial * $counter
+	@ counter = $counter + 1
+end
+echo "Factorial:" $factorial
