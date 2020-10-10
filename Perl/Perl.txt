@@ -1,0 +1,289 @@
+1.
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+print "Please enter a number:";
+my $input = <STDIN>;
+my $x = $input % 2
+if( $x == 0 ) {
+	print $x, "is even";
+} else {
+	print $x, "is odd";
+}
+
+2.
+#!/usr/bin/perl -w
+print "Are you okay?";
+my $input = <STDIN>;
+chomp $input;
+while( $input ne "y" || $input ne "Y" || $input ne "n" || $input ne "N" ) {
+	if( $input eq "y" || $input eq "Y" ) {
+		print "Glad to hear it\n";
+		last;
+	} elsif( $input eq "n" || $input eq "N" ) {
+		print "Sorry that you are not feeling good\n";
+		last;
+	} else {
+		print "Please enter a valid choice\n";
+		$input = <STDIN>;
+		chomp $input;
+	}
+}
+
+3.1
+#!/usr/bin/perl -w
+print "Please enter a score: ";
+$input = <STDIN>;
+chomp $input;
+while( $input >= 0 || $input <= 0 ) {
+	if( $input >= 91 && $input <= 100 ) {
+		print "You got an A\n";
+		last;
+	} elsif( $input >= 81 && $input <= 90 ) {
+		print "You got a B\n";
+		last;
+	} elsif( $input >= 71 && $input <= 80 ) {
+		print "You got a C\n";
+		last;
+	} elsif( $input >= 61 && $input <= 70 ) {
+		print "You got a D\n";
+		last;
+	} elsif( $input >= 0 && $input <= 60 ) {
+		print "You failed\n";
+		last;
+	} else {
+		print "Please enter a valid number: ";
+		$input = <STDIN>;
+		chomp $input;
+	}
+}
+
+3.2
+#!/usr/bin/perl -w
+if( $ARGV[0] >= 91 && $ARGV[0] <= 100 ) {
+	print "You got an A\n";
+} elsif( $ARGV[0] >= 81 && $ARGV[0] <= 90 ) {
+	print "You got a B\n";
+} elsif( $ARGV[0] >= 71 && $ARGV[0] <= 80 ) {
+	print "You got a C\n";
+} elsif( $ARGV[0] >= 61 && $ARGV[0] <= 70 ) {
+	print "You got a D\n";
+} elsif( $ARGV[0] >= 0 && $ARGV[0] <= 60 ) {
+	print "You failed\n";
+} else {
+	print "You entered an invalid number\n";
+}
+
+4.
+#!/usr/bin/perl -w
+$now = `date`;
+$element = 1;
+while( $element <= 6 ) {
+	if( $element == 1 ) {
+		$var1 = `echo $now | cut -d " " -f1`;
+		print $var1;
+	} elsif( $element == 2 ) {
+		$var2 = `echo $now | cut -d " " -f2`;
+		print $var2;
+	} elsif( $element == 3 ) {
+		$var3 = `echo $now | cut -d " " -f3`;
+		print $var3;
+	} elsif( $element == 4 ) {
+		$var4 = `echo $now | cut -d " " -f4`;
+		print $var4;
+	} elsif( $element == 5 ) {
+		$var5 = `echo $now | cut -d " " -f5`;
+		print $var5;
+	} elsif( $element == 6 ) {
+		$var6 = `echo $now | cut -d " " -f6`;
+		print $var6;
+	}
+	$element = $element + 1;
+}
+
+5.
+#!/usr/bin/perl -w
+print "Please enter a color: ";
+$input = <STDIN>;
+chomp $input;
+switch ($input) {
+	case [Bb]l* 	{ print "The sky is " $user_input; }
+	case red 	{ print "The sun is sometimes this color\n"; }
+	case yellow 	{ print "The sun is sometimes this color\n"; }
+	else 		{ print $input " is not in any of the defined categories\n"; }
+}
+
+
+6.
+#!/usr/bin/perl -w
+$num = 0;
+while( $num <= 9 ) {
+	print $num, " ";
+	$num = $num + 1;
+}
+print "\n";
+
+7.
+#!/usr/bin/perl -w
+$element = 1;
+while ( $element <= 7 ) {
+	if( $element == 1 ) {
+		print $ARGV[0], " ", $ARGV[1], " ", $ARGV[2], " ", $ARGV[3], " ", $ARGV[4], " ", $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif ( $element == 2 ) {
+		print $ARGV[1], " ", $ARGV[2], " ", $ARGV[3], " ", $ARGV[4], " ", $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif ( $element == 3 ) {
+		print $ARGV[2], " ", $ARGV[3], " ", $ARGV[4], " ", $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif ( $element == 4 ) {
+		print $ARGV[3], " ", $ARGV[4], " ", $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif ( $element == 5 ) {
+		print $ARGV[4], " ", $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif ( $element == 6 ) {
+		print $ARGV[5], " ", $ARGV[6], "\n";
+	} elsif( $element == 7 ) {
+		print $ARGV[6], "\n";
+	}
+	$element = $element + 1;
+}
+
+8.
+#!/usr/bin/perl -w
+print "Please enter a positive integer: ";
+$int1 = <STDIN>;
+chomp $int1;
+print "Please enter another positive integer: ";
+$int2 = <STDIN>;
+chomp $int2;
+#Smaller number logic
+if( $int1 == $int2 ) {
+	print "These numbers are equal\n";
+} elsif( $int1 < $int2 ) {
+	print $int1, " is less than ", $int2, "\n";
+} else {
+	print $int2, " is less than ", $int1, "\n";
+}
+
+#GCD Logic
+$temp = 0;
+$temp1 = $int1;
+$temp2 = $int2;
+
+while( $temp2 != 0 ) {
+	$temp = $temp2;
+	$temp2 = $temp1 % $temp2;
+	$temp1 = $temp;
+}
+
+print "GCD of ", $int1, " and ", $int2, " is ", $temp1, "\n";
+
+#LCM Logic
+$var1 = $int1 * $int2;
+$LCM = $var1 / $temp1;
+print "LCM of ", $int1, " and ", $int2, " is ", $LCM, "\n";
+
+9.
+#!/usr/bin/perl -w
+sub do_square {
+	$var1 = $ARGV[0] * $ARGV[0];
+	print $var1, "\n";
+}
+do_square();
+
+10.
+#!/usr/bin/perl -w
+
+$num1 = $ARGV[0];
+$num2 = $ARGV[1];
+
+sub menu {
+	print "\nMENU\n";
+	print "a. Add the numbers\n";
+	print "s. Subtract the numbers\n";
+	print "m. Multiply the numbers\n";
+	print "d. Divide the numbers\n";
+	print "e. Exit\n";
+	print "Enter a, s, m, d, or e: ";
+}
+
+sub add {
+	$var1 = $num1 + $num2;
+	print $var1;
+}
+
+sub subtract {
+	$var1 = $num1 - $num2;
+	print $var1;
+}
+
+sub multiply {
+	$var1 = $num1 * $num2;
+	print $var1;
+}
+
+sub divide {
+	$var1 = $num1 / $num2;
+	print $var1;
+}
+
+sub numberSwitch {
+	print "Would you like to do another operation using the same two integers, another operation using two different integers, or exit?\n";
+	print "1. Continue with old integers\n";
+	print "2. Continue with new integers\n";
+	print "3. Exit\n";
+	my $input = <STDIN>;
+	switch($input) {
+		case 1 { menu(); my $user_input = <STDIN>; chomp $user_input; }
+		case 2 { print "Please enter first new integer: \n";
+			$new1 = <STDIN>;
+			chomp $new1;
+			print "Please enter second new integer: \n";
+			$new2 = <STDIN>;
+			chomp $new2;
+			$num1 = $new1;
+			$num2 = $new2;
+			menu();
+			$user_input = <STDIN>; chomp $user_input; }
+		case 3 { $user_input = "e"; }
+	}
+}
+
+if( ( $#ARGV + 1 ) == 2 ) {
+	menu();
+	$user_input = <STDIN>;
+	chomp $user_input;
+	until( $user_input = "e" || $user_input = "E" ) {
+		switch($user_input) {
+			case a|A { add(); numberSwitch(); }
+			case s|S { subtract(); numberSwitch(); }
+			case m|M { multiply(); numberSwitch(); }
+			case d|D { divide(); numberSwitch(); }
+			case e|E { last; }
+			else { menu(); print "Please enter a correct choice: "; $user_input = <STDIN>; chomp $user_input; }
+		}
+	}
+} else {
+	print "This script requires two incoming arguments from the command line.\n";
+	print "For example if this script is named hello.pl\n";
+	print "I will pass the two arguments by using either options:\n";
+	print "Option 1: perl hello.pl 1 2\n";
+	print "Option 2: ./hello.pl 1 2\n";
+}
+
+11.
+#!/usr/bin/perl -w
+print "Please enter a number between 1 and 10: ";
+my $user_input = <STDIN>;
+chomp $user_input;
+$counter = 1;
+$summation = 0;
+$factorial = 1;
+while( $counter <= $user_input ) {
+	$summation= $counter + $summation;
+	$counter = $counter + 1;
+}
+print "Sum:", $summation;
+$counter = 1;
+while( $counter <= $user_input ) {
+	$factorial = $factorial * $counter;
+	$counter = $counter + 1;
+}
+print "Factorial:", $factorial;
