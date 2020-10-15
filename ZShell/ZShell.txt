@@ -1,0 +1,310 @@
+Name: Steven Phung
+CS2600.01
+ZShell Assignment
+
+1.
+#!/bin/zsh
+echo -n "Please enter a number: "
+read user_input
+(( x = $user_input % 2 ))
+if [[ $x == 0 ]];then
+    print $user_input "is even"
+else
+    print $user_input "is odd"
+fi
+
+2.
+#!/bin/zsh
+print "Are you OK?"
+read user_input
+while [[ $user_input != "y" ]] || [[ $user_input != "Y" ]] || [[ $user_input != "n" ]] || [[ $user_input != "N" ]];do
+    if [[ $user_input == "y" ]] || [[ $user_input == "Y" ]];then
+        print "Glad to hear it"
+        break
+    elif [[ $user_input == "n" ]] || [[ $user_input == "N" ]];then
+        print "Sorry that you are not feeling good"
+        break
+    else
+        print "Please enter a valid choice"
+        read user_input
+    fi
+done
+
+3.1
+#!/bin/zsh
+print -n "Please enter a score: "
+read user_input
+while [[ $user_input -ge 0 ]] || [[ $user_input -le 0 ]]
+do
+    if [[ $user_input -ge 91 ]] && [[ $user_input -le 100 ]];then
+        print "You got an A"
+        break
+    elif [[ $user_input -ge 81 ]] && [[ $user_input -le 90 ]];then
+        print "You got a B"
+        break
+    elif [[ $user_input -ge 71 ]] && [[ $user_input -le 80 ]];then
+        print "You got a C"
+        break
+    elif [[ $user_input -ge 61 ]] && [[ $user_input -le 70 ]];then
+        print "You got a D"
+        break
+    elif [[ $user_input -ge 0 ]] && [[ $user_input -le 60 ]];then
+        print "You failed"
+        break
+    else
+        print -n "Please enter a valid number: "
+        read user_input
+    fi
+done
+
+3.2
+#!/bin/zsh
+if [[ $1 -ge 91 ]] && [[ $1 -le 100 ]];then
+    print "You got an A"
+elif [[ $1 -ge 81 ]] && [[ $1 -le 90 ]];then
+    print "You got a B"
+elif [[ $1 -ge 71 ]] && [[ $1 -le 80 ]];then
+    print "You got a C"
+elif [[ $1 -ge 61 ]] && [[ $1 -le 70 ]];then
+    print "You got a D"
+elif [[ $1 -ge 0 ]] && [[ $1 -le 60 ]];then
+    print "You failed"
+else
+    print "You entered an invalid number"
+fi
+
+4.
+#!/bin/zsh
+now=`date`
+element=1
+while [[ $element -le 6 ]];do
+    if [[ $element -eq 1 ]];then
+        var1=`echo $now | cut -d " " -f1`
+        print $var1
+    elif [[ $element -eq 2 ]];then
+        var2=`echo $now | cut -d " " -f2`
+        print $var2
+    elif [[ $element -eq 3 ]];then
+        var3=`echo $now | cut -d " " -f3`
+        print $var3
+    elif [[ $element -eq 4 ]];then
+        var4=`echo $now | cut -d " " -f4`
+        print $var4
+    elif [[ $element -eq 5 ]];then
+        var5=`echo $now | cut -d " " -f5`
+        print $var5
+    elif [[ $element -eq 6 ]];then
+        var6=`echo $now | cut -d " " -f6`
+        print $var6
+    fi
+    (( element = $element + 1 ))
+done
+
+5.
+#!/bin/zsh
+print -n "Please enter a color: "
+read user_input
+case $user_input in
+    [Bb]l*)
+        print "The sky is" $user_input
+        ;;
+    red|yellow)
+        print "The sun is sometimes this color"
+        ;;
+    *)
+        print $user_input "is not any of the defined categories"
+        ;;
+esac
+
+6.
+#!/bin/zsh
+num=0
+while [[ $num -le 9 ]];do
+    print -n $num ""
+    (( num = $num + 1 ))
+done
+
+7.
+#!/bin/zsh
+while [[ $* ]];do
+    print $1
+    shift
+done
+
+8.
+#!/bin/zsh
+print -n "Please enter a positive integer: "
+read int1
+print -n "Please enter another positive integer: "
+read int2
+
+#Smaller number logic
+if [[ $int1 -eq $int2 ]];then
+    print "These numbers are equal"
+elif [[ $int1 -lt $int2 ]];then
+    print $int1 "is less than" $int2
+else
+    print $int2 "is less than" $int1
+fi
+
+#GCD Logic
+temp=0
+temp1=$int1
+temp2=$int2
+
+while [[ $temp2 != 0 ]];do
+    temp=$temp2
+    (( temp2 = $temp1 % $temp2 ))
+    temp1=$temp
+done
+
+print "GCD of" $int1 "and" $int2 "is" $temp1
+
+#LCM Logic
+(( var1 = $int1 * $int2 ))
+(( LCM = $var1 / $temp1 ))
+
+print "LCM of" $int1 "and" $int2 "is" $LCM
+
+9.
+#!/bin/zsh
+do_square()
+{
+    (( var1 = $1 * $1 ))
+    print $var1
+}
+
+do_square $1
+
+10.
+#!/bin/zsh
+num1=$1
+num2=$2
+menu()
+{
+    print
+    print "MENU"
+    print "a. Add the numbers"
+    print "s. Subtract the numbers"
+    print "m. Multiply the numbers"
+    print "d. Divide the numbers"
+    print "e. Exit"
+    print -n "Enter a, s, m, d, or e: "
+}
+add()
+{
+    (( var1 = $num1 + $num2 ))
+    print $num1 "+" $num2 "=" $var1
+}
+subtract()
+{
+    (( var1 = $num1 - $num2 ))
+    print $num1 "-" $num2 "=" $var1
+}
+multiply()
+{
+    (( var1 = $num1 * $num2 ))
+    print $num1 "*" $num2 "=" $var1
+}
+divide()
+{
+    (( var1 = $num1 / $num2 ))
+    print $num1 "/" $num2 "=" $var1
+}
+numberSwitch()
+{
+    print "Would you like to do another operation using the same integers, two different integers, or quit?"
+    print "1. Continue with same integers"
+    print "2. Continue with new integers"
+    print "3. Exit"
+    read input
+    case "$input" in
+        1)
+            menu
+            read user_input
+            ;;
+        2)
+            print -n "Please enter first new integer: "
+            read new1
+            print -n "Please enter second new integer: "
+            read new2
+            num1=$new1
+            num2=$new2
+            menu
+            read user_input
+            ;;
+        3)
+            user_input="e"
+            ;;
+        *)
+            print -n "Please enter a valid choice:"
+            read input
+    esac
+}
+
+if [ $# -eq 2 ];then
+    menu
+    read user_input
+    while [[ "$user_input" != "e" ]] || [[ "$user_input" != "E" ]];do
+        case "$user_input" in
+            a|A)
+                add
+                numberSwitch
+                continue
+                ;;
+            s|S)
+                subtract
+                numberSwitch
+                continue
+                ;;
+            m|M)
+                multiply
+                numberSwitch
+                continue
+                ;;
+            d|D)
+                divide
+                numberSwitch
+                continue
+                ;;
+            e|E)
+                break
+                ;;
+            *)
+                menu
+                echo
+                echo -n "Please enter a correct choice: "
+                read user_input
+        esac
+    done
+else
+    echo "This script requires two incoming arguments from the command line."
+    echo "For example: if the script is named hello.sh"
+    echo "I will need to pass two arguments by either: "
+    echo "Option 1: sh hello.sh 1 2"
+    echo "Option 2: ./hello.sh 1 2"
+fi
+
+11.
+#!/bin/zsh
+print -n "Please enter a number in-between 1 and 10: "
+read user_input
+counter=1
+summation=0
+factorial=1
+
+while [[ $counter -le $user_input ]];do
+    (( summation = $summation + $counter ))
+    (( counter = $counter + 1 ))
+done
+
+print "Sum:" $summation
+
+counter=1
+
+while [[ $counter -le $user_input ]];do
+    (( factorial = $factorial * $counter ))
+    (( counter = $counter + 1 ))
+done
+
+print "Factorial:" $factorial
